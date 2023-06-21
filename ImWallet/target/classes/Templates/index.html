@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IMwalleT</title>
+    <link rel="icon" type="image/jpg" th:src="@{/Templates/download.jpg}">
+
+    <style>
+    body {
+    background-color: #f5f5f5;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin-top: 30px;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+    color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    margin-right: 150px;
+}
+
+.filter-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.dropdown-filter {
+    margin-right: 10px;
+}
+
+.filter-dropdown {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+/* Rest of the CSS code */
+
+.filter-dropdown {
+    position: relative;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.filter-dropdown::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #999 transparent transparent transparent;
+    pointer-events: none;
+}
+
+.filter-dropdown.open::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Rest of the CSS code */
+
+
+    </style>
+</head>
+<body>
+<h1>Flight Information</h1>
+<div class="filter-section">
+    <label for="filterAirline">Airline Name:</label>
+    <input type="text" id="filterAirline" class="filter-input" placeholder="Search by Airline Name">
+
+    <div class="dropdown-filter">
+        <label for="filterDropdown">Filters:</label>
+        <select id="filterDropdown" class="filter-dropdown">
+            <option value="">All</option>
+            <optgroup label="Stopover">
+                <option value="stopover1">InDirect-Flight</option>
+                <option value="stopover2">Direct-Flight</option>
+            </optgroup>
+            <optgroup label="Time Category">
+                <option value="morning">Morning(12:00 AM to 12:00 PM)</option>
+                <option value="afternoon">Afternoon(12:00 PM to 5:00PM)</option>
+                <option value="evening">Evening(5:00 PM to 7:00 PM)</option>
+                <option value="night">Night(7:00 PM to 12:00 AM)</option>
+            </optgroup>
+        </select>
+    </div>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Time Category</th>
+        <th>Direct/Indirect Flights</th>
+        <th>Airline Name</th>
+<!--        <th>Published Fare</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="segmentInfo, segmentStatus : ${segmentInfos}">
+        <td th:text="${segmentStatus.index + 1}"></td>
+        <td th:text="${segmentInfo.timeCategory}"></td>
+        <td th:text="${segmentInfo.stopOver}"></td>
+        <td th:text="${segmentInfo.airlineName}"></td>
+<!--        <td th:text="${segmentInfo.publishedFare}"></td>-->
+    </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript" th:src="@{/filterName.js}"></script>
+</body>
+</html>
